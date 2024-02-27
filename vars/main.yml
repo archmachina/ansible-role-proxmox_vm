@@ -1,0 +1,4 @@
+---
+
+proxmox_internal_mandatory:
+  name: "{{ proxmox_vm_name }}"

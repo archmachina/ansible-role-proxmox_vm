@@ -1,0 +1,17 @@
+---
+
+- name: proxmox spec loop
+  ansible.builtin.include_tasks:
+    file: "proxmox_spec.yml"
+  loop_control:
+    loop_var: proxmox_vm_spec
+  loop: "{{ proxmox_vm_specs }}"
+
+- name: Get VM
+  community.general.proxmox_kvm: >
+    {{ proxmox_connection_info | combine(proxmox_internal_mandatory) | combine({'state': 'current'}) }}
+  register: proxmox_vm_state
+
+- name: Show VM info
+  ansible.builtin.debug:
+    msg: "{{ proxmox_vm_state }}"

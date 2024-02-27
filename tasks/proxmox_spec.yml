@@ -1,0 +1,28 @@
+---
+
+- name: proxmox kvm spec
+  community.general.proxmox_kvm: >
+    {{ proxmox_vm_spec['kvm'] | combine(proxmox_connection_info) | combine(proxmox_spec_override) | combine(proxmox_internal_mandatory) }}
+  register: proxmox_spec_state
+  until: proxmox_spec_state is succeeded
+  retries: 1
+  delay: 5
+  when: "'kvm' in proxmox_vm_spec"
+
+- name: proxmox nic spec
+  community.general.proxmox_nic: >
+    {{ proxmox_vm_spec['nic'] | combine(proxmox_connection_info) | combine(proxmox_spec_override) | combine(proxmox_internal_mandatory) }}
+  register: proxmox_spec_state
+  until: proxmox_spec_state is succeeded
+  retries: 1
+  delay: 5
+  when: "'nic' in proxmox_vm_spec"
+
+- name: proxmox disk spec
+  community.general.proxmox_disk: >
+    {{ proxmox_vm_spec['disk'] | combine(proxmox_connection_info) | combine(proxmox_spec_override) | combine(proxmox_internal_mandatory) }}
+  register: proxmox_spec_state
+  until: proxmox_spec_state is succeeded
+  retries: 1
+  delay: 5
+  when: "'disk' in proxmox_vm_spec"
