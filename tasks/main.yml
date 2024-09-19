@@ -17,3 +17,4 @@
   ansible.builtin.debug:
     msg: "{{ proxmox_vm_state }}"
   check_mode: false
+
